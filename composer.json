@@ -1,0 +1,28 @@
+{
+    "name": "rc1021/laravel-admin-line-binder",
+    "description": "在 `z-song/laravel-admin` 加入 Line 通知綁定功能",
+    "require": {
+        "encore/laravel-admin": "^1.8",
+        "illuminate/support": "^8.75",
+        "doctrine/dbal": "2.*|3.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "rc1021",
+            "email": "rc.701021@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rc1021\\LaravelAdmin\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rc1021\\LaravelAdmin\\ServiceProvider"
+            ]
+        }
+    }
+}
