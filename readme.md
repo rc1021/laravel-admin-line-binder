@@ -2,6 +2,8 @@
 
 This is a package to integrate [Line Notify](https://notify-bot.line.me/zh_TW/) with [Laravel-admin](https://github.com/z-song/laravel-admin).
 
+![alt Snapshot](https://raw.githubusercontent.com/rc1021/laravel-admin-line-binder/master/snapshot.png)
+
 ## Installation
 
 Require this package with composer.
@@ -14,7 +16,7 @@ Laravel uses Package Auto-Discovery, so doesn't require you to manually add the 
 
 ### Add credentials in the `line` key of `config.services`:
 
-In order to bind service via Line Notify, you need to add credentials in the `line` key of `config/services.php`.
+In order to bind service via Line Notify, you need to add [credentials](https://notify-bot.line.me/my/services/new) in the `line` key of `config/services.php`.
 
 ```php
 'line' => [
@@ -34,6 +36,10 @@ php artisan vendor:publish --provider="Rc1021\LaravelAdmin\ServiceProvider"
 ```shell
 php artisan migrate
 ```
+
+### And new permission:
+
+![alt New Permission](https://raw.githubusercontent.com/rc1021/laravel-admin-line-binder/master/add_premission.png)
 
 ## Usage
 
