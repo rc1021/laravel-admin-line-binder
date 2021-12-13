@@ -3,8 +3,8 @@
 namespace Rc1021\LaravelAdmin\Form\Field;
 
 use Encore\Admin\Form\Field;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form\Field\PlainInput;
-use Illuminate\Support\Arr;
 use Rc1021\LaravelAdmin\Facades\LineNotify;
 
 class LINENotifyBinder extends Field
@@ -27,18 +27,11 @@ class LINENotifyBinder extends Field
      * @param mixed $column
      * @param array $arguments
      */
-    public function __construct($column, $arguments)
+    public function __construct()
     {
-        array_unshift($arguments, __('line::admin.Line Notify'));
-        parent::__construct($column, $arguments);
-
-        $user_id = Arr::get($arguments, 1);
-        $this->model = Arr::get($arguments, 2, LineNotify::UserModel());
+        parent::__construct('line_notify_token', [__('line::admin.Line Notify')]);
         $this->attribute([
             'readonly' => true,
-            'data-callbackurl' => route(LineNotify::getRouteNameForCallback(), ['id' => $user_id]),
-            'data-cancelurl' => route(LineNotify::getRouteNameForCancel(), ['id' => $user_id]),
-            'data-lineclientid' => LineNotify::getClientID()
         ]);
     }
 
@@ -60,13 +53,12 @@ class LINENotifyBinder extends Field
             ->defaultAttribute('placeholder', $this->getPlaceholder());
 
         $status = $this->value() ? __('line::admin.Binder Cancel') : __('line::admin.Binder');
-        $this->append("<a class='btn btn-default' href='javascript:;' onclick='oAuth2();' type='button'>{$status}</a>")
+        $url = $this->value() ? LineNotify::getRevokeUrl() : LineNotify::getBinderUrl();
+        $this->append("<a class='btn btn-default' href='{$url}' type='button'>{$status}</a>")
             ->defaultAttribute('grouptype', 'btn');
-
         $this->addVariables([
             'prepend' => $this->prepend,
             'append'  => $this->append,
-            'cancelable' => $this->value()? 'true' : 'false'
         ]);
 
         $this->script = <<<EOT

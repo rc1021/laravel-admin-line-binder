@@ -2,8 +2,9 @@
 
 namespace Rc1021\LaravelAdmin;
 
-use Rc1021\LaravelAdmin\Exceptions\InvalidConfigurationException;
+use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Model;
+use Rc1021\LaravelAdmin\Exceptions\InvalidConfigurationException;
 
 class LINENotifyBinderFactory
 {
@@ -76,5 +77,39 @@ class LINENotifyBinderFactory
     public function getClientSecret()
     {
         return $this->service->get('client_secret');
+    }
+    
+    /**
+     * getBinderUrl
+     *
+     * @return void
+     */
+    public function getBinderUrl()
+    {
+        $clientID = $this->getClientID();
+        $user_id = Admin::user()->id;
+        $url = route($this->getRouteNameForCallback(), ['id' => $user_id]);
+        return "https://notify-bot.line.me/oauth/authorize?response_type=code&client_id={$clientID}&redirect_uri={$url}&scope=notify&state=NO_STATE";
+    }
+    
+    /**
+     * getRevokeUrl
+     *
+     * @return void
+     */
+    public function getRevokeUrl()
+    {
+        $user_id = Admin::user()->id;
+        return route($this->getRouteNameForCancel(), ['id' => $user_id]);
+    }
+    
+    /**
+     * current user LineNotifyToken
+     *
+     * @return void
+     */
+    public function currentLineNotifyToken() 
+    {
+        return data_get(Admin::user(), 'line_notify_token', null);
     }
 }

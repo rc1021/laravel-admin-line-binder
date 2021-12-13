@@ -1,3 +1,11 @@
+<div style="text-align: center;">
+    English
+    <span>|</span>
+    <a href="readme-zh_TW.md">中文版</a>
+    <span>|</span>
+    <a href="readme-ja.md">日本語</a>
+</div>
+
 ## laravel-admin Line Notify Binder
 
 This is a package to integrate [Line Notify](https://notify-bot.line.me/zh_TW/) with [Laravel-admin](https://github.com/z-song/laravel-admin).
@@ -13,6 +21,14 @@ composer require rc1021/laravel-admin-line-binder
 ```
 
 Laravel uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
+
+### Laravel without auto-discovery:
+
+If you don't use auto-discovery, add the ServiceProvider to the providers array in config/app.php
+
+```php
+Rc1021\LaravelAdmin\ServiceProvider::class,
+```
 
 ### Add credentials in the `line` key of `config.services`:
 
@@ -37,7 +53,7 @@ php artisan vendor:publish --provider="Rc1021\LaravelAdmin\ServiceProvider"
 php artisan migrate
 ```
 
-### And new permission:
+### And new permission to everyone:
 
 ![alt New Permission](https://raw.githubusercontent.com/rc1021/laravel-admin-line-binder/master/add_premission.png)
 
@@ -49,7 +65,27 @@ You need to override the settingForm() method in `App\Admin\Controllers\AuthCont
 protected function settingForm()
 {
     $form = parent::settingForm();
-    $form->linenotify('line_notify_token', Admin::user()->id);
+    $form->linenotify();
     return $form;
 }
+```
+
+## Helper
+
+Get the token of the currently logged in user
+
+```php
+currentLineNotifyToken();
+```
+
+Get Line Notify bind url
+
+```php
+lineNotifyBinderUrl();
+```
+
+Get Line Notify revoke url
+
+```php
+lineNotifyRevokeUrl();
 ```

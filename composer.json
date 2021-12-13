@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "Rc1021\\LaravelAdmin\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {

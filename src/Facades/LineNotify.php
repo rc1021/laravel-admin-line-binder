@@ -14,6 +14,9 @@ use Rc1021\LaravelAdmin\LINENotifyBinderFactory;
  * @method static string getRouteNameForCallback()
  * @method static string getClientID()
  * @method static string getClientSecret()
+ * @method static string getBinderUrl()
+ * @method static string getRevokeUrl()
+ * @method static string|null currentLineNotifyToken()
  *
  * @see \Rc1021\LaravelAdmin\LINENotifyBinderFactory
  */
